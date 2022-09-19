@@ -5,6 +5,31 @@
     /// </summary>
     public class PeselService : IPeselService
     {
+        /// <summary>
+        /// Służy do obliczenia wieku osoby o podanym numerze PESEL.
+        /// </summary>
+        /// <param name="pesel">Numer PESEL w formie stringa.</param>
+        /// <returns>Ilość lat osoby o podanym numerze PESEL.</returns>
+        public int Age(string pesel)
+        {
+            var birthDate = BithDate(pesel);
+            var today = DateTime.Today;
+            var years = today.Year - birthDate.Year;
+
+            //Ustalenie, czy osoba miała już urodziny
+            if (birthDate.Month >= today.Month && birthDate.Day > today.Day)
+            {
+                years--;
+            }
+
+            return years;
+        }
+
+        /// <summary>
+        /// Wydobywa datę urodzenia z numeru PESEL.
+        /// </summary>
+        /// <param name="pesel">Numer PESEL w formie stringa.</param>
+        /// <returns>Datę urodzenia osoby o podanym numerze PESEL.</returns>
         public DateTime BithDate(string pesel)
         {
             //Wydobycie daty z peselu
@@ -41,6 +66,11 @@
             return new DateTime(birthYear, birthMonth, birthDay);
         }
 
+        /// <summary>
+        /// Służy do obliczenia zniżki przysługującej osobie o danym numerze PESEL.
+        /// </summary>
+        /// <param name="pesel">Numer PESEL w formie stringa.</param>
+        /// <returns>Zniżkę w formacie double dla osoby o podanym numerze PESEL.</returns>
         public double Promotion(string pesel)
         {
             var birthDate = BithDate(pesel);

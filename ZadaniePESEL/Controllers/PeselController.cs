@@ -15,7 +15,8 @@ namespace ZadaniePESEL.Controllers
             _peselService = peselService;
         }
 
-        [HttpGet(Name = "Wiek")]
+        //Zadanie 1.
+        [HttpGet("GetAge/{pesel}", Name = "Wiek")]
         public IActionResult GetAge(string pesel)
         {
             //Exception
@@ -24,21 +25,13 @@ namespace ZadaniePESEL.Controllers
             //    throw new HttpRequestException("Podany PESEL ma nieprawidłową długość");
             //}
 
-            var birthDate = _peselService.BithDate(pesel);
-            var a = 1;
-            var b = 1;
-
-            var age = DateTime.Today.Subtract(birthDate);
-            var c = 1;
-            var d = 1;
-
-            return Ok(age);
+            return Ok(_peselService.Age(pesel));
         }
 
-        //[HttpGet(Name = "Promocja")]
-        //public IActionResult GetPromotion(string pesel)
-        //{
-            
-        //}
+        [HttpGet("GetPromotion/{pesel}", Name = "Promocja")]
+        public IActionResult GetPromotion(string pesel)
+        {
+            return Ok(_peselService.Promotion(pesel));
+        }
     }
 }

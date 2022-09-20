@@ -1,4 +1,6 @@
-﻿namespace ZadaniePESEL.Services
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace ZadaniePESEL.Services
 {
     /// <summary>
     /// Klasa, w której umieszczone są wszystkie funkcje służące do otrzymania daty urodzenia oraz płci z numeru PESEL.
@@ -78,7 +80,7 @@
             var promotionMonth = new List<int> { 1, 10, 11, 12 };
             var today = DateTime.Today;
 
-            if (today.Equals(birthDate))
+            if (today.Day.Equals(birthDate.Day) && today.Month.Equals(birthMonth))
             {
                 return 0.1;
             }
@@ -92,6 +94,37 @@
             }
 
             return 0;
+        }
+
+        public bool IsMale(string pesel)
+        {
+            var sexNumber = int.Parse(pesel[9].ToString());
+
+            if (sexNumber % 2 == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public string Wishes(string pesel, string name, string surname)
+        {
+            var isMale = IsMale(pesel);
+            var firstWord = "";
+
+            if (isMale)
+            {
+                firstWord = "Kliencie";
+            }
+            else
+            {
+                firstWord = "Klientko";
+            }
+
+            return $"{firstWord} {name} {surname}! Życzymy Ci sto lat!";
         }
     }
 }

@@ -15,7 +15,7 @@ namespace ZadaniePESEL.Controllers
             _peselService = peselService;
         }
 
-        //Zadanie 1.
+        //Usługa 1.
         [HttpGet("GetAge/{pesel}", Name = "Wiek")]
         public IActionResult GetAge(string pesel)
         {
@@ -28,10 +28,18 @@ namespace ZadaniePESEL.Controllers
             return Ok(_peselService.Age(pesel));
         }
 
+        //Usługa 2.
         [HttpGet("GetPromotion/{pesel}", Name = "Promocja")]
         public IActionResult GetPromotion(string pesel)
         {
             return Ok(_peselService.Promotion(pesel));
+        }
+
+        //Usługa 3.
+        [HttpGet("GetWishes/{pesel}/{name}/{surname}", Name = "Życzenia")]
+        public IActionResult GetWishes(string pesel, string name, string surname)
+        {
+            return Ok(_peselService.Wishes(pesel, name, surname));
         }
     }
 }

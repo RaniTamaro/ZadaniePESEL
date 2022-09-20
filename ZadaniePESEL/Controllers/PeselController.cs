@@ -17,13 +17,18 @@ namespace ZadaniePESEL.Controllers
 
         //Usługa 1.
         [HttpGet("GetAge/{pesel}", Name = "Wiek")]
+        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
         public IActionResult GetAge(string pesel)
         {
-            //Exception
-            //if (pesel.Length != 11)
-            //{
-            //    throw new HttpRequestException("Podany PESEL ma nieprawidłową długość");
-            //}
+            if (pesel is null || pesel == string.Empty)
+            {
+                return NotFound();
+            }
+
+            if (!_peselService.PeselValidation(pesel))
+            {
+                return BadRequest();
+            }
 
             return Ok(_peselService.Age(pesel));
         }
@@ -32,6 +37,16 @@ namespace ZadaniePESEL.Controllers
         [HttpGet("GetPromotion/{pesel}", Name = "Promocja")]
         public IActionResult GetPromotion(string pesel)
         {
+            if (pesel is null || pesel == string.Empty)
+            {
+                return NotFound();
+            }
+
+            if (!_peselService.PeselValidation(pesel))
+            {
+                return BadRequest();
+            }
+
             return Ok(_peselService.Promotion(pesel));
         }
 
@@ -39,6 +54,16 @@ namespace ZadaniePESEL.Controllers
         [HttpGet("GetWishes/{pesel}/{name}/{surname}", Name = "Życzenia")]
         public IActionResult GetWishes(string pesel, string name, string surname)
         {
+            if (pesel is null || pesel == string.Empty)
+            {
+                return NotFound();
+            }
+
+            if (!_peselService.PeselValidation(pesel))
+            {
+                return BadRequest(ModelState);
+            }
+
             return Ok(_peselService.Wishes(pesel, name, surname));
         }
     }

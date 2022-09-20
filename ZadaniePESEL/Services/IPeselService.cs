@@ -11,5 +11,7 @@
         public bool IsMale(string pesel);
 
         public string Wishes(string pesel, string name, string surname);
+
+        public bool PeselValidation(string pesel);
     }
 }

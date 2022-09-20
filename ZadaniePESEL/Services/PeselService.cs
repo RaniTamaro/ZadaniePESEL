@@ -18,7 +18,7 @@ namespace ZadaniePESEL.Services
             var today = DateTime.Today;
             var years = today.Year - birthDate.Year;
 
-            //Ustalenie, czy osoba miała już urodziny
+            //Ustalenie, czy osoba miała już urodziny, jeśli nie zmniejszamy wiek o jeden.
             if (birthDate.Month >= today.Month && birthDate.Day > today.Day)
             {
                 years--;
@@ -39,7 +39,7 @@ namespace ZadaniePESEL.Services
             var birthMonth = int.Parse(pesel.Substring(2, 2));
             var birthDay = int.Parse(pesel.Substring(4, 2));
 
-            //Ustalenie roku urodzenia
+            //Ustalenie roku urodzenia na podstawie numeru misiąca.
             if (birthMonth > 20)
             {
                 birthMonth -= 20;
@@ -80,6 +80,7 @@ namespace ZadaniePESEL.Services
             var promotionMonth = new List<int> { 1, 10, 11, 12 };
             var today = DateTime.Today;
 
+            //Zwrócenie liczby odpowiadajacej za znikę.
             if (today.Day.Equals(birthDate.Day) && today.Month.Equals(birthMonth))
             {
                 return 0.1;
@@ -96,6 +97,11 @@ namespace ZadaniePESEL.Services
             return 0;
         }
 
+        /// <summary>
+        /// Służy do ustalenia płci osoby o danym numerze PESEL.
+        /// </summary>
+        /// <param name="pesel">Numer PESEL w formie stringa.</param>
+        /// <returns>True - jeśli osoba jest mężczyzną, false - jeśli osoba jest kobietą.</returns>
         public bool IsMale(string pesel)
         {
             var sexNumber = int.Parse(pesel[9].ToString());
@@ -110,6 +116,13 @@ namespace ZadaniePESEL.Services
             }
         }
 
+        /// <summary>
+        /// Służy do wygenerowania życzeń dla klienta w zależności od jego płci.
+        /// </summary>
+        /// <param name="pesel">Numer PESEL w formie stringa.</param>
+        /// <param name="name">Imię osoby.</param>
+        /// <param name="surname">Nazwisko osoby.</param>
+        /// <returns>Życzenia z okazji urodzin klienta.</returns>
         public string Wishes(string pesel, string name, string surname)
         {
             var isMale = IsMale(pesel);
@@ -125,6 +138,37 @@ namespace ZadaniePESEL.Services
             }
 
             return $"{firstWord} {name} {surname}! Życzymy Ci sto lat!";
+        }
+
+        /// <summary>
+        /// Służy do sprawdzenia poprawności numeru PESEL. Sprawdza jego długość oraz liczbę kontorlną.
+        /// </summary>
+        /// <param name="pesel">Numer PESEL w formie stringa.</param>
+        /// <returns>True - jeśli numer PESEL jest poprawny, false - w przeciwnym wypadku.</returns>
+        public bool PeselValidation(string pesel)
+        {
+            var multiplication = new List<int> { 1, 3, 7, 9, 1, 3, 7, 9, 1, 3 };
+            var sum = 0;
+
+            //Sprawdzenie długości peselu
+            if (pesel.Length != 11)
+            {
+                return false;
+            }
+
+            //Sprawdzenie poprawności liczby kontrolnej
+            for (int i = 0; i < pesel.Length - 1; i++)
+            {
+                sum += int.Parse(pesel[i].ToString()) * multiplication.ElementAt(i);
+            }
+
+            var controlNumber = (10 - (sum % 10)) % 10;
+            if (controlNumber != int.Parse(pesel[10].ToString()))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

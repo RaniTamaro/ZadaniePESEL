@@ -40,10 +40,10 @@ namespace ZadaniePESEL.Services
             var birthDay = int.Parse(pesel.Substring(4, 2));
 
             //Ustalenie roku urodzenia na podstawie numeru misiąca.
-            if (birthMonth > 20)
+            if (birthMonth > 80)
             {
-                birthMonth -= 20;
-                birthYear += 2000;
+                birthMonth -= 80;
+                birthYear += 1800;
             }
             else if (birthMonth > 40)
             {
@@ -55,10 +55,10 @@ namespace ZadaniePESEL.Services
                 birthMonth -= 60;
                 birthYear += 2200;
             }
-            else if (birthMonth > 80)
+            else if (birthMonth > 20)
             {
-                birthMonth -= 80;
-                birthYear += 1800;
+                birthMonth -= 20;
+                birthYear += 2000;
             }
             else
             {

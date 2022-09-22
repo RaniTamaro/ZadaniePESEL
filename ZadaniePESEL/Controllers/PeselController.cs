@@ -4,6 +4,9 @@ using ZadaniePESEL.Services;
 
 namespace ZadaniePESEL.Controllers
 {
+    /// <summary>
+    /// Kontroler obsługujący żądania API.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class PeselController : ControllerBase
@@ -21,6 +24,7 @@ namespace ZadaniePESEL.Controllers
         {
             try
             {
+                //Walidacja danych
                 if (pesel is null || pesel == string.Empty)
                 {
                     return NotFound();
@@ -45,6 +49,7 @@ namespace ZadaniePESEL.Controllers
         {
             try
             {
+                //Walidacja danych
                 if (pesel is null || pesel == string.Empty)
                 {
                     return NotFound();
@@ -55,7 +60,7 @@ namespace ZadaniePESEL.Controllers
                     return BadRequest();
                 }
 
-                return Ok(_peselService.Age(pesel));
+                return Ok(_peselService.Promotion(pesel));
             }
             catch
             {
@@ -69,6 +74,7 @@ namespace ZadaniePESEL.Controllers
         {
             try
             {
+                //Walidacja danych
                 if (pesel is null || pesel == string.Empty)
                 {
                     return NotFound();

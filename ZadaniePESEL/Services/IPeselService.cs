@@ -1,5 +1,8 @@
 ﻿namespace ZadaniePESEL.Services
 {
+    /// <summary>
+    /// Interfejs do obsługi serwisu.
+    /// </summary>
     public interface IPeselService
     {
         public DateTime BithDate(string pesel);

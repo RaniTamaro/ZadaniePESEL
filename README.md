@@ -11,6 +11,7 @@ Simple API created for recruitment task. This API return few values like age or 
 
 ## Features
 - API return all needed information: age, discount and birthday wishes.
+- API has unit tests in other project
 
 ## Setup
 Clone this repository to your desktop and open it in your Visual Studio.
